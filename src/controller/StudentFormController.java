@@ -1,6 +1,7 @@
 package controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import utill.crudutill;
@@ -42,6 +43,22 @@ public class StudentFormController {
         cilNic.setCellValueFactory(new PropertyValueFactory<>("nic"));
 
 
+        tblStudent.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            btnSave.setText(newValue != null ? "Update" : "Save");
+            if (newValue != null) {
+                txtContact.setText(newValue.getContact());
+                txtEmail.setText(newValue.getEmail());
+                txtAddress.setText(newValue.getAddress());
+                txtName.setText(newValue.getName());
+                txtId.setText(newValue.getStudent_id());
+                txtNic.setText(newValue.getNic());
+
+            }
+        });
+tblStudent.refresh();
+
+
+
 
 
         try {
@@ -75,7 +92,18 @@ public class StudentFormController {
     }
 
     public void DeleteOnAction(ActionEvent actionEvent) {
-       // String id = tblStudent.getSelectionModel().getSelectedItem();
+        String id = tblStudent.getSelectionModel().getSelectedItem().getStudent_id();
+        try {
+          crudutill.executeUpdate("DELETE FROM Student WHERE studentId=?",id);
+
+            tblStudent.getItems().remove(tblStudent.getSelectionModel().getSelectedItem());
+            tblStudent.getSelectionModel().clearSelection();
+
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, "Failed to delete the Room").show();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
 
     }
