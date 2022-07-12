@@ -24,7 +24,7 @@ public class StudentFormController {
     public JFXTextField txtEmail;
     public Button btnDelete;
     public Button btnSave;
-    public TableView tblStudent;
+    public TableView<StudentTm> tblStudent;
     public TableColumn cilId;
     public TableColumn cilName;
     public TableColumn cilNic;
@@ -40,6 +40,9 @@ public class StudentFormController {
         cilAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         cilName.setCellValueFactory(new PropertyValueFactory<>("name"));
         cilNic.setCellValueFactory(new PropertyValueFactory<>("nic"));
+
+
+
 
         try {
             LoadAllStudent();
@@ -72,6 +75,8 @@ public class StudentFormController {
     }
 
     public void DeleteOnAction(ActionEvent actionEvent) {
+       // String id = tblStudent.getSelectionModel().getSelectedItem();
+
 
     }
 
@@ -89,8 +94,8 @@ public class StudentFormController {
 
 
         try {
-            if (crudutill.executeUpdate("INSERT INTO Student VALUES (?,?,?,?,?,?)", s1.getStudent_id(), s1.getContact(), s1.getAddress(), s1.getEmail()
-                    , s1.getName(), s1.getNic())) {
+            if (crudutill.executeUpdate("INSERT INTO Student VALUES (?,?,?,?,?,?)", s1.getStudent_id(),s1.getName() ,s1.getNic(),  s1.getAddress(),s1.getContact(), s1.getEmail()
+                    )) {
 
 
             }
