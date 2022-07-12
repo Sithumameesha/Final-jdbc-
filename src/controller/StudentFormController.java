@@ -109,10 +109,16 @@ tblStudent.refresh();
     }
 
     public void SaveOnAction(ActionEvent actionEvent) {
-        SaveStudent();
+        try {
+            SaveStudent();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void SaveStudent() {
+    private void SaveStudent() throws SQLException, ClassNotFoundException {
         Student s1 = new Student(txtId.getText(),
                 txtContact.getText(),
                 txtAddress.getText(),
@@ -120,17 +126,29 @@ tblStudent.refresh();
                 txtName.getText(),
                 txtNic.getText());
 
-
-        try {
-            if (crudutill.executeUpdate("INSERT INTO Student VALUES (?,?,?,?,?,?)", s1.getStudent_id(),s1.getName() ,s1.getNic(),  s1.getAddress(),s1.getContact(), s1.getEmail()
-                    )) {
-
-
-            }
-        } catch (SQLException | ClassNotFoundException exception) {
-            exception.printStackTrace();
-
+if (btnSave.getText().equalsIgnoreCase("Save")) {
+    try {
+        if (crudutill.executeUpdate("INSERT INTO Student VALUES (?,?,?,?,?,?)", s1.getStudent_id(), s1.getName(), s1.getNic(), s1.getAddress(), s1.getContact(), s1.getEmail()
+        )) {
 
         }
+    } catch (SQLException | ClassNotFoundException exception) {
+        exception.printStackTrace();
+
+
+    }
+}else {
+    String id = tblStudent.getSelectionModel().getSelectedItem().getStudent_id();
+    String name = tblStudent.getSelectionModel().getSelectedItem().getName();
+    String email = tblStudent.getSelectionModel().getSelectedItem().getEmail();
+    String contact = tblStudent.getSelectionModel().getSelectedItem().getContact();
+    String address = tblStudent.getSelectionModel().getSelectedItem().getAddress();
+    String nic = tblStudent.getSelectionModel().getSelectedItem().getNic();
+
+
+crudutill.executeUpdate("UPDATE Student Set studentName= ?,email =? ,contact =? ,address =?,nic =? WHERE studentId =?",name,email,contact
+,address,nic,id);
+tblStudent.refresh();
+}
     }
 }
