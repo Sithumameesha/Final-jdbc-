@@ -9,7 +9,6 @@ import java.sql.SQLException;
 
 public class crudutill {
     private static PreparedStatement execute(String sql, Object... params) throws SQLException, ClassNotFoundException {
-//        Connection connection = DbConnection.getInstance().getConnection();
         Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement statement = connection.prepareStatement(sql);
         for (int i = 0; i < params.length; i++) {
@@ -25,4 +24,5 @@ public class crudutill {
     public static boolean executeUpdate(String sql, Object... params) throws SQLException, ClassNotFoundException {
         return execute(sql, params).executeUpdate() > 0;
     }
+
 }
