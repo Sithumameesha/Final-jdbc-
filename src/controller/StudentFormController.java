@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
+import model.Student;
 
 public class StudentFormController {
     public JFXTextField txtId;
@@ -28,6 +29,8 @@ public class StudentFormController {
     }
 
     private void SaveStudent() {
+        Student s1 = new Student();
+
 
     }
 }
